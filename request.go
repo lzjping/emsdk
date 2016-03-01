@@ -6,7 +6,10 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
+
+const retryInterval = 3 * time.Second
 
 var ErrEM EMError
 
@@ -43,7 +46,21 @@ func (c *Client) sendRequest(name string, body io.Reader, method string) (string
 	}
 	res.Body.Close()
 
-	if res.StatusCode != 200 {
+	if res.StatusCode != http.StatusOK {
+		if res.StatusCode == http.StatusServiceUnavailable {
+			time.Sleep(retryInterval)
+			res, err := client.Do(req)
+			if err != nil {
+				return "", err
+			}
+
+			result, err := ioutil.ReadAll(res.Body)
+			if err != nil {
+				return "", err
+			}
+			res.Body.Close()
+			return string(result), nil
+		}
 		ErrEM.Code = res.StatusCode
 		json.Unmarshal(result, &ErrEM)
 		return "", ErrEM
