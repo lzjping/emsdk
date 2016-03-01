@@ -20,6 +20,7 @@ func (c *Client) CreateUser(username, password string) (bool, error) {
 				if err != nil {
 					return false, err
 				}
+				return true, err
 			}
 		}
 		return false, err
@@ -39,6 +40,7 @@ func (c *Client) DeleteUser(username string) (bool, error) {
 				if err != nil {
 					return false, err
 				}
+				return true, err
 			}
 		}
 		return false, err
@@ -59,6 +61,7 @@ func (c *Client) ResetPassword(username, password string) (bool, error) {
 				if err != nil {
 					return false, err
 				}
+				return true, err
 			}
 		}
 		return false, err
