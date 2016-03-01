@@ -1,6 +1,7 @@
 package emsdk_test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/wpajqz/emsdk"
@@ -8,11 +9,18 @@ import (
 
 var (
 	client *emsdk.Client
+	err    error
 )
 
-func TestNew(t *testing.T) {
-	var err error
+func TestMain(m *testing.M) {
+	println("setup")
 	client, err = emsdk.New("links123", "linker", "YXA617WqYLg2EeWieSNUhFCrvg", "YXA6WCpzHwPQ8S2oMhozRy4PXFu2YGo")
+	code := m.Run()
+	println("teardown")
+	os.Exit(code)
+}
+
+func TestNew(t *testing.T) {
 	if err != nil {
 		if err == emsdk.ErrEM {
 			info := err.(emsdk.EMError)
@@ -24,7 +32,7 @@ func TestNew(t *testing.T) {
 	}
 
 	if client == nil {
-		t.Fail()
+		t.Fatal("instance emsdk fail.")
 	}
 }
 

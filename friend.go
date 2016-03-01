@@ -23,19 +23,20 @@ func (c *Client) DeleteFriend(owner, friend string) (bool, error) {
 	return true, err
 }
 
-func (c *Client) AddBlacklist(owner, friends []string) (bool, error) {
+func (c *Client) AddBlacklist(owner string, friends []string) (bool, error) {
 	url := "users/" + owner + "/blocks/users/"
 	request := struct {
-		userNames []string `json:"usernames"`
+		UserNames []string `json:"usernames"`
 	}{
-		userNames: friends,
+		UserNames: friends,
 	}
 
 	data, err := json.Marshal(request)
 	if err != nil {
 		return false, err
 	}
-	_, err = c.sendRequest(url, data, "POST")
+
+	_, err = c.sendRequest(url, strings.NewReader(string(data)), "POST")
 	if err != nil {
 		return false, err
 	}
@@ -44,7 +45,7 @@ func (c *Client) AddBlacklist(owner, friends []string) (bool, error) {
 
 func (c *Client) DeleteBlacklist(owner, blocked string) (bool, error) {
 	url := "users/" + owner + "/blocks/users/" + blocked
-	_, err := c.sendRequest(url, strings.NewReader(nil), "DELETE")
+	_, err := c.sendRequest(url, strings.NewReader(""), "DELETE")
 	if err != nil {
 		return false, err
 	}
