@@ -37,7 +37,7 @@ func TestNew(t *testing.T) {
 }
 
 func TestCreateUser(t *testing.T) {
-	result, err := client.CreateUser("217", "123456")
+	err := client.CreateUser("217", "123456")
 	if err != nil {
 		if err == emsdk.ErrEM {
 			info := err.(emsdk.EMError)
@@ -47,12 +47,10 @@ func TestCreateUser(t *testing.T) {
 		}
 		t.Fatal(err)
 	}
-
-	t.Log("create user:", result)
 }
 
 func TestResetPassword(t *testing.T) {
-	result, err := client.ResetPassword("217", "456789")
+	err := client.ResetPassword("217", "456789")
 	if err != nil {
 		if err == emsdk.ErrEM {
 			info := err.(emsdk.EMError)
@@ -62,12 +60,10 @@ func TestResetPassword(t *testing.T) {
 		}
 		t.Fatal(err)
 	}
-
-	t.Log("reset password:", result)
 }
 
 func TestDeleteUser(t *testing.T) {
-	result, err := client.DeleteUser("217")
+	err := client.DeleteUser("217")
 	if err != nil {
 		if err == emsdk.ErrEM {
 			info := err.(emsdk.EMError)
@@ -77,6 +73,4 @@ func TestDeleteUser(t *testing.T) {
 		}
 		t.Fatal(err)
 	}
-
-	t.Log("delete user:", result)
 }
