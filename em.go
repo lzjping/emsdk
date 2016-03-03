@@ -1,6 +1,11 @@
 package emsdk
 
-var client *Client
+import "sync"
+
+var (
+	client *Client
+	once   sync.Once
+)
 
 type Client struct {
 	clientID     string
@@ -10,7 +15,7 @@ type Client struct {
 }
 
 func New(orgName, appName, clientID, clientSecret string) (*Client, error) {
-	if client == nil {
+	once.Do(func() {
 		client = &Client{
 			baseURL:      "https://a1.easemob.com/" + orgName + "/" + appName,
 			clientID:     clientID,
@@ -23,7 +28,7 @@ func New(orgName, appName, clientID, clientSecret string) (*Client, error) {
 		}
 
 		client.adminToken = adminToken
-	}
+	})
 
 	return client, nil
 }
