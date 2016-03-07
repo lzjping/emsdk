@@ -15,6 +15,7 @@ type Client struct {
 }
 
 func New(orgName, appName, clientID, clientSecret string) (*Client, error) {
+	var err error
 	once.Do(func() {
 		client = &Client{
 			baseURL:      "https://a1.easemob.com/" + orgName + "/" + appName,
@@ -22,13 +23,8 @@ func New(orgName, appName, clientID, clientSecret string) (*Client, error) {
 			clientSecret: clientSecret,
 		}
 
-		adminToken, err := client.getAccessToken()
-		if err != nil {
-			return nil, err
-		}
-
-		client.adminToken = adminToken
+		client.adminToken, err = client.getAccessToken()
 	})
 
-	return client, nil
+	return client, err
 }
