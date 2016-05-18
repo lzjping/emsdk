@@ -55,3 +55,23 @@ func (c *Client) IsOnline(username string) bool {
 
 	return true
 }
+
+func (c *Client) Deactivate(username string) bool {
+	url := "users/" + username + "/deactivate"
+	_, err := c.sendRequest(url, nil, "POST")
+	if err != nil {
+		return false
+	}
+
+	return true
+}
+
+func (c *Client) Activate(username string) bool {
+	url := "users/" + username + "/activate"
+	_, err := c.sendRequest(url, nil, "POST")
+	if err != nil {
+		return false
+	}
+
+	return true
+}
