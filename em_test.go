@@ -62,6 +62,19 @@ func TestResetPassword(t *testing.T) {
 	}
 }
 
+func TestResetNickname(t *testing.T) {
+	err := client.ResetNickname("217", "linker_景")
+	if err != nil {
+		if err == emsdk.ErrEM {
+			info := err.(emsdk.EMError)
+			t.Log(info.Code)
+			t.Log(info.Description)
+			t.FailNow()
+		}
+		t.Fatal(err)
+	}
+}
+
 func TestDeleteUser(t *testing.T) {
 	err := client.DeleteUser("217")
 	if err != nil {
@@ -73,4 +86,9 @@ func TestDeleteUser(t *testing.T) {
 		}
 		t.Fatal(err)
 	}
+}
+
+func TestIsOnline(t *testing.T) {
+	ok := client.IsOnline("217")
+	t.Log(ok)
 }
