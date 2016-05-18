@@ -6,7 +6,7 @@ import (
 )
 
 // 添加好友
-func (c *Client) ddContact(owner, friend string) error {
+func (c *Client) AddContact(owner, friend string) error {
 	url := "users/" + owner + "/contacts/users/" + friend
 	_, err := c.sendRequest(url, strings.NewReader(""), "POST")
 
