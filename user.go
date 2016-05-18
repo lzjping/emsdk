@@ -6,7 +6,7 @@ import (
 )
 
 // 授权模式注册用户
-func (c *Client) CreateUser(username, password string) error {
+func (c *Client) CreateAccount(username, password string) error {
 	data := `{"username":"` + username + `","password":"` + password + `"}`
 	_, err := c.sendRequest("users", strings.NewReader(data), "POST")
 
@@ -14,7 +14,7 @@ func (c *Client) CreateUser(username, password string) error {
 }
 
 // 从环信服务器中删除用户
-func (c *Client) DeleteUser(username string) error {
+func (c *Client) DeleteAccount(username string) error {
 	url := "users/" + username
 	_, err := c.sendRequest(url, strings.NewReader(""), "DELETE")
 
@@ -22,7 +22,7 @@ func (c *Client) DeleteUser(username string) error {
 }
 
 // 修改用户密码
-func (c *Client) ResetPassword(username, password string) error {
+func (c *Client) ChangePassword(username, password string) error {
 	url := "users/" + username + "/password"
 	data := `{"newpassword":"` + password + `"}`
 	_, err := c.sendRequest(url, strings.NewReader(data), "PUT")
@@ -31,7 +31,7 @@ func (c *Client) ResetPassword(username, password string) error {
 }
 
 // 修改用户昵称
-func (c *Client) ResetNickname(username, nickname string) error {
+func (c *Client) ChangeNickname(username, nickname string) error {
 	url := "users/" + username
 	data := `{"nickname":"` + nickname + `"}`
 	_, err := c.sendRequest(url, strings.NewReader(data), "PUT")
