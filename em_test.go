@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/wpajqz/emsdk"
+	"github.com/links123com/emsdk"
 )
 
 var (
@@ -37,7 +37,7 @@ func TestNew(t *testing.T) {
 }
 
 func TestCreateUser(t *testing.T) {
-	err := client.CreateUser("217", "123456")
+	err := client.CreateAccount("217", "123456")
 	if err != nil {
 		if err == emsdk.ErrEM {
 			info := err.(emsdk.EMError)
@@ -50,7 +50,7 @@ func TestCreateUser(t *testing.T) {
 }
 
 func TestResetPassword(t *testing.T) {
-	err := client.ResetPassword("217", "456789")
+	err := client.ChangePassword("217", "456789")
 	if err != nil {
 		if err == emsdk.ErrEM {
 			info := err.(emsdk.EMError)
@@ -63,7 +63,7 @@ func TestResetPassword(t *testing.T) {
 }
 
 func TestResetNickname(t *testing.T) {
-	err := client.ResetNickname("217", "linker_景")
+	err := client.ChangeNickname("217", "linker_景")
 	if err != nil {
 		if err == emsdk.ErrEM {
 			info := err.(emsdk.EMError)
@@ -76,7 +76,7 @@ func TestResetNickname(t *testing.T) {
 }
 
 func TestDeleteUser(t *testing.T) {
-	err := client.DeleteUser("217")
+	err := client.DeleteAccount("217")
 	if err != nil {
 		if err == emsdk.ErrEM {
 			info := err.(emsdk.EMError)
